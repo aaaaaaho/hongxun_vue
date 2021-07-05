@@ -51,114 +51,266 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '后台管理系统', icon: 'dashboard' }
     }]
   },
 
   {
-    path: '/example',
+    path: '/parkingInfo',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    name: 'parkingInfo',
+    redirect: '/parkingInfo/list',
+    meta: { title: '车场管理', icon: '停车场' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/parkingInfo/list/index'),
+        meta: { title: '车场列表' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'longRent',
+        name: 'longRent',
+        component: () => import('@/views/parkingInfo/longRent/index'),
+        meta: { title: '长租用户' }
+      },
+      {
+        path: 'user',
+        name: 'user',
+        component: () => import('@/views/parkingInfo/user/index'),
+        meta: { title: '月租用户' }
+      },
+      {
+        path: 'specialCar',
+        name: 'specialCar',
+        component: () => import('@/views/parkingInfo/specialCar/index'),
+        meta: { title: '特殊车辆' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/parkRecord',
     component: Layout,
+    name: 'parkRecord',
+    redirect: '/parkRecord/presence',
+    meta: { title: '车场记录', icon: '车场记录' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'presence',
+        name: 'presence',
+        component: () => import('@/views/parkRecord/presence/index'),
+        meta: { title: '在场车辆' }
+      },
+      {
+        path: 'parkDetail',
+        name: 'parkDetail',
+        component: () => import('@/views/parkRecord/parkDetail/index'),
+        meta: { title: '停车明细' }
+      },
+      {
+        path: 'tempStop',
+        name: 'tempStop',
+        component: () => import('@/views/parkRecord/tempStop/index'),
+        meta: { title: '临停缴费' }
+      },
+      {
+        path: 'abnormalRecord',
+        name: 'abnormalRecord',
+        component: () => import('@/views/parkRecord/abnormalRecord/index'),
+        meta: { title: '异常放行' }
+      },
+      {
+        path: 'recharge',
+        name: 'recharge',
+        component: () => import('@/views/parkRecord/recharge/index'),
+        meta: { title: '充值记录' }
+      },
+      {
+        path: 'shiftRecord',
+        name: 'shiftRecord',
+        component: () => import('@/views/parkRecord/shiftRecord/index'),
+        meta: { title: '交班记录' }
+      },
+      {
+        path: 'carInOut',
+        name: 'carInOut',
+        component: () => import('@/views/parkRecord/carInOut/index'),
+        meta: { title: '出入记录' }
       }
+
     ]
   },
 
   {
-    path: '/nested',
+    path: '/merchant',
     component: Layout,
-    redirect: '/nested/menu1',
+    redirect: '//merchant/list',
     name: 'Nested',
     meta: {
-      title: 'Nested',
-      icon: 'nested'
+      title: '商户管理',
+      icon: '商户管理'
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'list',
+        component: () => import('@/views/merchant/list/index'), // Parent router-view
+        name: 'List',
+        meta: { title: '商户列表' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'users',
+        component: () => import('@/views/merchant/users/index'),
+        name: 'Users',
+        meta: { title: '商户账户' }
       }
     ]
   },
 
   {
-    path: 'external-link',
+    path: '/report',
     component: Layout,
+    redirect: '/report/inCome',
+    name: 'Report',
+    meta: {
+      title: '财务报表',
+      icon: '财务管理'
+    },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'inCome',
+        component: () => import('@/views/report/inCome/index'), // Parent router-view
+        name: 'inCome',
+        meta: { title: '收入报表' }
+      },
+      {
+        path: 'tempStop',
+        component: () => import('@/views/report/tempStop/index'),
+        name: 'tempStop',
+        meta: { title: '临停报表' }
+      },
+      {
+        path: 'paymentMethod',
+        component: () => import('@/views/report/paymentMethod/index'),
+        name: 'paymentMethod',
+        meta: { title: '支付方式' }
       }
     ]
   },
+
+  {
+    path: '/business',
+    component: Layout,
+    redirect: '/business/traffic',
+    name: 'Business',
+    meta: {
+      title: '经营分析',
+      icon: '经营分析'
+    },
+    children: [
+      {
+        path: 'traffic',
+        component: () => import('@/views/business/traffic/index'), // Parent router-view
+        name: 'Traffic',
+        meta: { title: '车流量分析' }
+      },
+      {
+        path: 'bertha',
+        component: () => import('@/views/business/berth/index'),
+        name: 'Bertha',
+        meta: { title: '泊位分析' }
+      },
+      {
+        path: 'abnormal',
+        component: () => import('@/views/business/abnormal/index'),
+        name: 'Abnormal',
+        meta: { title: '异常放行分析' }
+      },
+      {
+        path: 'tempPayScene',
+        component: () => import('@/views/business/tempPayScene/index'),
+        name: 'tempPayScene',
+        meta: { title: '临停支付场景' }
+      },
+      {
+        path: 'parkingTime',
+        component: () => import('@/views/business/parkingTime/index'),
+        name: 'parkingTime',
+        meta: { title: '停车时长' }
+      }
+    ]
+  },
+  {
+    path: '/discount',
+    component: Layout,
+    redirect: '/discount/discountRule',
+    name: 'Discount',
+    meta: {
+      title: '优惠管理',
+      icon: '优惠管理'
+    },
+    children: [
+      {
+        path: 'discountRule',
+        component: () => import('@/views/discount/discountRule/index'), // Parent router-view
+        name: 'discountRule',
+        meta: { title: '优惠规则' }
+      },
+      {
+        path: 'rechargeRecord',
+        component: () => import('@/views/discount/rechargeRecord/index'),
+        name: 'rechargeRecord',
+        meta: { title: '充值记录' }
+      },
+      {
+        path: 'grantRecord',
+        component: () => import('@/views/discount/grantRecord/index'),
+        name: 'grantRecord',
+        meta: { title: '发放记录' }
+      }
+    ]
+  },
+  {
+    path: '/authority',
+    component: Layout,
+    redirect: '/authority/role',
+    name: 'Authority',
+    meta: {
+      title: '权限管理',
+      icon: '权限管理'
+    },
+    children: [
+      {
+        path: 'role',
+        component: () => import('@/views/authorityManagement/role/index'), // Parent router-view
+        name: 'Role',
+        meta: { title: '角色管理' }
+      },
+      {
+        path: 'users',
+        component: () => import('@/views/authorityManagement/users/index'),
+        name: 'Users',
+        meta: { title: 'menu2' }
+      },
+      {
+        path: 'log',
+        component: () => import('@/views/authorityManagement/log/index'),
+        name: 'Log',
+        meta: { title: '操作日志' }
+      }
+    ]
+  },
+
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+  //       meta: { title: 'External Link', icon: 'link' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
