@@ -20,7 +20,7 @@ export default {
     },
     height: {
       type: String,
-      default: '350px'
+      default: '400px'
     },
     autoResize: {
       type: Boolean,
@@ -34,7 +34,10 @@ export default {
   data() {
     return {
       chart: null,
-      testData: [2, 5, 6, 1, 2, 3, 5, 99]
+      testData: [150, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+      testData_2: [50, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+      testData_3: [70, 20, 20, 20, 20, 20, 20, 20, 20, 20],
+      testData_4: [60, 30, 30, 30, 30, 30, 30, 30, 30, 30]
     }
   },
   watch: {
@@ -62,10 +65,17 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ expectedData, actualData, testData } = {}) {
+
+    setOptions() {
       this.chart.setOption({
+        title: {
+          text: '收入分析图',
+          left: 'center',
+          y: 'bottom',
+          padding: 10
+        },
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'test', 'test22'],
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
           boundaryGap: false,
           axisTick: {
             show: false
@@ -74,7 +84,7 @@ export default {
         grid: {
           left: 10,
           right: 10,
-          bottom: 20,
+          bottom: 40,
           top: 30,
           containLabel: true
         },
@@ -91,33 +101,33 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual','test']
+          data: ['总收入', '临停缴费', '租赁费', '管理费']
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: '总收入', itemStyle: {
             normal: {
-              color: '#FF005A',
+              color: '#40c9c6',
               lineStyle: {
-                color: '#FF005A',
+                color: '#40c9c6',
                 width: 2
               }
             }
           },
           smooth: true,
           type: 'line',
-          data: expectedData,
+          data: this.testData,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
         },
         {
-          name: 'actual',
+          name: '临停缴费',
           smooth: true,
           type: 'line',
           itemStyle: {
             normal: {
-              color: '#3888fa',
+              color: '#36a3f7',
               lineStyle: {
-                color: '#3888fa',
+                color: '#36a3f7',
                 width: 2
               },
               areaStyle: {
@@ -125,19 +135,19 @@ export default {
               }
             }
           },
-          data: actualData,
+          data: this.testData_2,
           animationDuration: 2800,
           animationEasing: 'quadraticOut'
         },
         {
-          name: 'test',
+          name: '租赁费',
           smooth: true,
           type: 'line',
           itemStyle: {
             normal: {
-              color: '#000000',
+              color: '#f4516c',
               lineStyle: {
-                color: '#3888fa',
+                color: '#f4516c',
                 width: 2
               },
               areaStyle: {
@@ -145,7 +155,27 @@ export default {
               }
             }
           },
-          data: this.testData,
+          data: this.testData_3,
+          animationDuration: 2800,
+          animationEasing: 'quadraticOut'
+        },
+        {
+          name: '管理费',
+          smooth: true,
+          type: 'line',
+          itemStyle: {
+            normal: {
+              color: '#bfb834',
+              lineStyle: {
+                color: '#bfb834',
+                width: 2
+              },
+              areaStyle: {
+                color: '#f3f8ff'
+              }
+            }
+          },
+          data: this.testData_4,
           animationDuration: 2800,
           animationEasing: 'quadraticOut'
         }
