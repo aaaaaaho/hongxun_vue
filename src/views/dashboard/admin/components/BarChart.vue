@@ -82,6 +82,9 @@ export default {
         legend: {
           data: ['入场数', '出场数']
         },
+        color:[
+          'rgba(14,165,215,0.64)',
+          'rgba(250,27,7,0.76)'],
         series: [{
           name: '入场数',
           type: 'bar',

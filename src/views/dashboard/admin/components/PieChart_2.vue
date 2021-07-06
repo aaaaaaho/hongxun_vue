@@ -46,7 +46,7 @@ export default {
 
       this.chart.setOption({
         title:{
-          text: '支付方式',
+          text: '出车分析',
           padding: 10
         },
         tooltip: {
@@ -56,20 +56,23 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['现金', '支付宝', '微信', '刷卡'],
+          data: ['正常放行', '免费放行', '异常放行'],
         },
+        color:[
+          'rgba(14,165,215,0.71)',
+          'rgba(16,203,25,0.6)',
+          'rgba(250,21,3,0.62)'],
         series: [
           {
-            name: '支付方式',
+            name: '出车分析',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
             data: [
-              { value: 320, name: '现金' },
-              { value: 240, name: '支付宝' },
-              { value: 149, name: '微信' },
-              { value: 100, name: '刷卡' }
+              { value: 320, name: '正常放行' },
+              { value: 240, name: '免费放行' },
+              { value: 149, name: '异常放行' }
             ],
             animationEasing: 'cubicInOut',
             animationDuration: 2600
