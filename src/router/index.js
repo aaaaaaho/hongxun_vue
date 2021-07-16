@@ -194,6 +194,12 @@ export const constantRoutes = [
         component: () => import('@/views/report/paymentMethod/index'),
         name: 'paymentMethod',
         meta: { title: '支付方式' }
+      },
+      {
+        path: 'details',
+        component: () => import('@/views/report/details/index'),
+        name: 'details',
+        meta: { title: '收入明细' }
       }
     ]
   },
@@ -290,7 +296,7 @@ export const constantRoutes = [
         path: 'users',
         component: () => import('@/views/authorityManagement/users/index'),
         name: 'Users',
-        meta: { title: 'menu2' }
+        meta: { title: '用户管理' }
       },
       {
         path: 'log',
