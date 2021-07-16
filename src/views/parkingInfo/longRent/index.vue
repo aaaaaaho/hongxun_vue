@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="姓名">
         <el-input v-model="formInline.name" placeholder="姓名"></el-input>

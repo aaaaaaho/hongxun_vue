@@ -12,7 +12,7 @@
       </el-form-item>
     </el-form>
 
-    <el-table :data="list">
+    <el-table :data="list.slice((currentPage-1)*pageSize,currentPage*pageSize)">
 <!--      v-loading="listLoading"-->
 <!--      :data="list"-->
 <!--      element-loading-text="Loading"-->
@@ -51,6 +51,17 @@
 <!--        </template>-->
 <!--      </el-table-column>-->
     </el-table>
+    <div class="block">
+      <span class="demonstration"></span>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
+        layout="total, prev, pager, next"
+        :total="list.length">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -85,14 +96,68 @@ export default {
           address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
           num:101
         },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
+        {
+          id:2,
+          name:'青岛路机器人停车库_2',
+          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
+          num:101
+        },
       ],
 
       formInline: {
         user: '',
         id: ''
-      }
-
-
+      },
+      currentPage: 1,
+      pageSize: 10,
     }
   },
   created() {
@@ -106,6 +171,12 @@ export default {
     //     this.listLoading = false
     //   })
     // }
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    }
   }
 }
 </script>
