@@ -160,7 +160,7 @@ export default {
           time: '2h',
           date: '2021-6-5',
           date_fin:'2021-6-7',
-          url: require('D:\\vue_learn\\vue-admin-template\\src\\views\\parkRecord\\presence\\statics\\1.jpg')
+          url: require('../presence/statics/1.jpg')
         },
         {
           id: 2,

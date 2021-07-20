@@ -116,7 +116,7 @@ export default {
           group: '鸿迅停车',
           time: '2h',
           date: '2021-6-5',
-          url: require('D:\\vue_learn\\vue-admin-template\\src\\views\\parkRecord\\presence\\statics\\1.jpg')
+          url: require('../presence/statics/1.jpg')
         },
         {
           id: 2,
