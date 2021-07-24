@@ -66,10 +66,10 @@ export default {
       this.setOptions(this.chartData)
     },
 
-    setOptions({testData,testData_2,testData_3,testData_4}={}) {
+    setOptions({testData,testData_2}={}) {
       this.chart.setOption({
         title: {
-          text: '收入分析图',
+          text: '收入构成',
           left: 'center',
           y: 'bottom',
           padding: 10
@@ -101,10 +101,10 @@ export default {
           }
         },
         legend: {
-          data: ['总收入', '临停缴费', '租赁费', '管理费']
+          data: ['应收金额', '实收金额']
         },
         series: [{
-          name: '总收入', itemStyle: {
+          name: '应收金额', itemStyle: {
             normal: {
               color: '#40c9c6',
               lineStyle: {
@@ -119,66 +119,26 @@ export default {
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
         },
-          {
-            name: '临停缴费',
-            smooth: true,
-            type: 'line',
-            itemStyle: {
-              normal: {
+        {
+          name: '实收金额',
+          smooth: true,
+          type: 'line',
+          itemStyle: {
+            normal: {
+              color: '#36a3f7',
+              lineStyle: {
                 color: '#36a3f7',
-                lineStyle: {
-                  color: '#36a3f7',
-                  width: 2
-                },
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
+                width: 2
+              },
+              areaStyle: {
+                color: '#f3f8ff'
               }
-            },
-            data: testData_2,
-            animationDuration: 2800,
-            animationEasing: 'quadraticOut'
+            }
           },
-          {
-            name: '租赁费',
-            smooth: true,
-            type: 'line',
-            itemStyle: {
-              normal: {
-                color: '#f4516c',
-                lineStyle: {
-                  color: '#f4516c',
-                  width: 2
-                },
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
-              }
-            },
-            data: testData_3,
-            animationDuration: 2800,
-            animationEasing: 'quadraticOut'
-          },
-          {
-            name: '管理费',
-            smooth: true,
-            type: 'line',
-            itemStyle: {
-              normal: {
-                color: '#bfb834',
-                lineStyle: {
-                  color: '#bfb834',
-                  width: 2
-                },
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
-              }
-            },
-            data: testData_4,
-            animationDuration: 2800,
-            animationEasing: 'quadraticOut'
-          }
+          data: testData_2,
+          animationDuration: 2800,
+          animationEasing: 'quadraticOut'
+        }
         ]
       })
     }

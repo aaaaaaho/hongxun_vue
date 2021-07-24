@@ -66,17 +66,17 @@ export default {
       this.setOptions(this.chartData)
     },
 
-    setOptions({testData,testData_2,testData_3,testData_4}={}) {
+    setOptions({testData,testData_2}={}) {
       this.chart.setOption({
         title: {
-          text: '收入分析图',
+          text: '收入构成',
           left: 'center',
           y: 'bottom',
           padding: 10
         },
         xAxis: {
           data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-          boundaryGap: false,
+          // boundaryGap: false,
           axisTick: {
             show: false
           }
@@ -91,7 +91,7 @@ export default {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
-            type: 'cross'
+            type: 'shadow'
           },
           padding: [5, 10]
         },
@@ -101,82 +101,38 @@ export default {
           }
         },
         legend: {
-          data: ['总收入', '临停缴费', '租赁费', '管理费']
+          data: ['应收金额', '实收金额']
         },
         series: [{
-          name: '总收入', itemStyle: {
+          name: '应收金额', itemStyle: {
             normal: {
               color: '#40c9c6',
-              lineStyle: {
-                color: '#40c9c6',
-                width: 2
-              }
             }
           },
-          smooth: true,
-          type: 'line',
+          // smooth: true,
+          type: 'bar',
           data:testData,
-          animationDuration: 2800,
+          barWidth :'20%',
+          stack:'amount',
+          animationDuration: 1500,
           animationEasing: 'cubicInOut'
-        },
+           },
           {
-            name: '临停缴费',
-            smooth: true,
-            type: 'line',
+            name: '实收金额',
+            // smooth: true,
+            type: 'bar',
             itemStyle: {
               normal: {
                 color: '#36a3f7',
-                lineStyle: {
-                  color: '#36a3f7',
-                  width: 2
-                },
                 areaStyle: {
                   color: '#f3f8ff'
                 }
               }
             },
             data: testData_2,
-            animationDuration: 2800,
-            animationEasing: 'quadraticOut'
-          },
-          {
-            name: '租赁费',
-            smooth: true,
-            type: 'line',
-            itemStyle: {
-              normal: {
-                color: '#f4516c',
-                lineStyle: {
-                  color: '#f4516c',
-                  width: 2
-                },
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
-              }
-            },
-            data: testData_3,
-            animationDuration: 2800,
-            animationEasing: 'quadraticOut'
-          },
-          {
-            name: '管理费',
-            smooth: true,
-            type: 'line',
-            itemStyle: {
-              normal: {
-                color: '#bfb834',
-                lineStyle: {
-                  color: '#bfb834',
-                  width: 2
-                },
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
-              }
-            },
-            data: testData_4,
-            animationDuration: 2800,
+            animationDuration: 1500,
+            barWidth :'20%',
+            stack:'amount',
             animationEasing: 'quadraticOut'
           }
         ]
