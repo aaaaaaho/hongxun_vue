@@ -73,7 +73,7 @@ const lineChartData = {
   //   expectedData: [130, 140, 141, 142, 145, 150, 160],
   //   actualData: [120, 82, 91, 154, 162, 140, 130]
   // }
-  newVisitis: {
+  newVisitissss: {
     testData: [100, 50, 50, 50, 50, 50, 50, 50, 50, 50],
     testData_2: [50, 10, 10, 10, 10, 10, 10, 10, 10, 10],
     testData_3: [70, 20, 20, 20, 20, 20, 20, 20, 20, 20],
@@ -95,7 +95,7 @@ export default {
   },
   data() {
     return {
-      lineChartData_2: lineChartData.newVisitis
+      lineChartData_2: lineChartData.newVisitissss
     }
   },
   methods: {
