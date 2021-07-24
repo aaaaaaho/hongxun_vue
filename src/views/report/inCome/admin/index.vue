@@ -25,12 +25,12 @@
 <!--      </el-col>-->
       <el-col style="width: 50%;height: 400px" >
         <div class="chart-wrapper">
-          <pie-chart />
+          <pie-chart :chart-data="pieChartData" />
         </div>
       </el-col>
       <el-col style="width: 50%" >
         <div class="chart-wrapper">
-          <pie-chart_2 />
+          <pie-chart_2 :chart-data="pieChartData_2" />
         </div>
       </el-col>
     </el-row>
@@ -59,34 +59,36 @@ import BarChart from './components/BarChart'
 // import BoxCard from './components/BoxCard'
 
 const lineChartData = {
-  // newVisitis: {
-  //   expectedData: [100, 120, 161, 134, 105, 160, 165],
-  //   actualData: [120, 82, 91, 154, 162, 140, 145]
-  // },
-  // messages: {
-  //   expectedData: [200, 192, 120, 144, 160, 130, 140],
-  //   actualData: [180, 160, 151, 106, 145, 150, 130]
-  // },
-  // purchases: {
-  //   expectedData: [80, 100, 121, 104, 105, 90, 100],
-  //   actualData: [120, 90, 100, 138, 142, 130, 130]
-  // },
-  // shoppings: {
-  //   expectedData: [130, 140, 141, 142, 145, 150, 160],
-  //   actualData: [120, 82, 91, 154, 162, 140, 130]
-  // }
   newVisitis: {
-    testData: [1000, 5000, 1550, 3330, 3000, 50, 2500, 5000, 3600, 2788],
+    testData: [1000, 5000, 1550, 3330, 3000, 5032, 2500, 5000, 3600, 2788],
     testData_2: [2500, 1005, 2152, 5234, 1234, 2543, 1234, 1550, 1543, 1550]
   }
 }
 
 const barChartData = {
   newVisitis: {
-      testData: [200,200,200,200,200,200,200],
-      testData_2: [200,200,200,200,200,200,200]
+      testData: [312,345,657,867,978,931,312],
+      testData_2: [123,345,200,200,123,235,123],
+      testData_3: [200,123,432,645,200,123,645],
+      testData_4: [453,200,534,200,765,423,745],
+      testData_5: [200,123,123,321,543,765,624],
   }
 }
+
+const pieChartData=[
+  { value: 3200, name: '商户充值' },
+  { value: 2652, name: '临停缴费' },
+  { value: 1494, name: '管理费' },
+  { value: 1006, name: '储值卡' },
+  { value: 3125, name: '租赁费'}
+]
+
+const pieChartData_2=[
+  { value: 100, name: '现金' },
+  { value: 262, name: '支付宝' },
+  { value: 144, name: '微信' },
+  { value: 106, name: '刷卡' }
+]
 
 export default {
   name: 'inCome',
@@ -103,13 +105,17 @@ export default {
   data() {
     return {
       lineChartData_2: lineChartData.newVisitis,
-      barChartData: barChartData.newVisitis
+      barChartData: barChartData.newVisitis,
+      pieChartData: pieChartData,
+      pieChartData_2 : pieChartData_2
     }
   },
   methods: {
     handleSetLineChartData(type) {
       this.lineChartData_2 = lineChartData[type]
       this.barChartData = barChartData[type]
+      this.pieChartData = pieChartData[type]
+      this.pieChartData_2 = pieChartData_2[type]
     }
   }
 }

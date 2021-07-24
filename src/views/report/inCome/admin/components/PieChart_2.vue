@@ -21,6 +21,10 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    chartData: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -43,10 +47,14 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
+      this.setOption(this.chartData)
+    },
 
-      this.chart.setOption({
+    setOption(test_data=[]){
+      this.chart.setOption
+      ({
         title:{
-          text: '出车分析',
+          text: '支付方式',
           padding: 10
         },
         tooltip: {
@@ -56,24 +64,15 @@ export default {
         legend: {
           left: 'center',
           bottom: '10',
-          data: ['正常放行', '免费放行', '异常放行'],
         },
-        color:[
-          'rgba(14,165,215,0.71)',
-          'rgba(16,203,25,0.6)',
-          'rgba(250,21,3,0.62)'],
         series: [
           {
-            name: '出车分析',
+            name: '支付方式',
             type: 'pie',
             roseType: 'radius',
             radius: [15, 95],
             center: ['50%', '38%'],
-            data: [
-              { value: 320, name: '正常放行' },
-              { value: 240, name: '免费放行' },
-              { value: 149, name: '异常放行' }
-            ],
+            data: test_data,
             animationEasing: 'cubicInOut',
             animationDuration: 2600
           }

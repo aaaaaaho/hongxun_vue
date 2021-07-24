@@ -21,6 +21,10 @@ export default {
     height: {
       type: String,
       default: '300px'
+    },
+    chartData: {
+      type: Object,
+      required: true
     }
   },
   data() {
@@ -43,40 +47,38 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
+      this.setOption(this.chartData)
+    },
 
-      this.chart.setOption({
-        title:{
-          text: '支付方式',
-          padding: 10
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c} ({d}%)'
-        },
-        legend: {
-          left: 'center',
-          bottom: '10',
-          data: ['现金', '支付宝', '微信', '刷卡'],
-        },
-        series: [
-          {
-            name: '支付方式',
-            type: 'pie',
-            roseType: 'radius',
-            radius: [15, 95],
-            center: ['50%', '38%'],
-            data: [
-              { value: 320, name: '现金' },
-              { value: 240, name: '支付宝' },
-              { value: 149, name: '微信' },
-              { value: 100, name: '刷卡' }
-            ],
-            animationEasing: 'cubicInOut',
-            animationDuration: 2600
-          }
-        ]
-      })
-    }
+      setOption(test_data=[]){
+        this.chart.setOption
+        ({
+          title:{
+            text: '实收构成',
+            padding: 10
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
+          legend: {
+            left: 'center',
+            bottom: '10',
+          },
+          series: [
+            {
+              name: '实收构成',
+              type: 'pie',
+              roseType: 'radius',
+              radius: [15, 95],
+              center: ['50%', '38%'],
+              data: test_data,
+              animationEasing: 'cubicInOut',
+              animationDuration: 2600
+            }
+          ]
+        })
+      }
   }
 }
 </script>

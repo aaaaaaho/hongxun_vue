@@ -66,7 +66,7 @@ export default {
       this.setOptions(this.chartData)
     },
 
-    setOptions({testData,testData_2}={}) {
+    setOptions({testData,testData_2,testData_3,testData_4,testData_5}={}) {
       this.chart.setOption({
         title: {
           text: '收入构成',
@@ -101,10 +101,10 @@ export default {
           }
         },
         legend: {
-          data: ['应收金额', '实收金额']
+          data: ['暂停缴费', '租赁费','管理费','储值卡','商户充值']
         },
         series: [{
-          name: '应收金额', itemStyle: {
+          name: '暂停缴费', itemStyle: {
             normal: {
               color: '#40c9c6',
             }
@@ -118,7 +118,7 @@ export default {
           animationEasing: 'cubicInOut'
            },
           {
-            name: '实收金额',
+            name: '租赁费',
             // smooth: true,
             type: 'bar',
             itemStyle: {
@@ -134,7 +134,62 @@ export default {
             barWidth :'20%',
             stack:'amount',
             animationEasing: 'quadraticOut'
-          }
+          },
+          {
+            name: '管理费',
+            // smooth: true,
+            type: 'bar',
+            itemStyle: {
+              normal: {
+                color: '#fc0689',
+                areaStyle: {
+                  color: '#f3f8ff'
+                }
+              }
+            },
+            data: testData_3,
+            animationDuration: 1500,
+            barWidth :'20%',
+            stack:'amount',
+            animationEasing: 'quadraticOut'
+          },
+          {
+            name: '储值卡',
+            // smooth: true,
+            type: 'bar',
+            itemStyle: {
+              normal: {
+                color: '#e39f14',
+                areaStyle: {
+                  color: '#f3f8ff'
+                }
+              }
+            },
+            data: testData_4,
+            animationDuration: 1500,
+            barWidth :'20%',
+            stack:'amount',
+            animationEasing: 'quadraticOut'
+          },
+          {
+            name: '商户充值',
+            // smooth: true,
+            type: 'bar',
+            itemStyle: {
+              normal: {
+                color: '#14b30d',
+                areaStyle: {
+                  color: '#f3f8ff'
+                }
+              }
+            },
+            data: testData_5,
+            animationDuration: 1500,
+            barWidth :'20%',
+            stack:'amount',
+            animationEasing: 'quadraticOut'
+          },
+
         ]
       })
     }
