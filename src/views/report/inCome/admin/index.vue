@@ -75,7 +75,7 @@ const barChartData = {
   }
 }
 
-const pieChartData=[
+const pieChartData =[
   { value: 3200, name: '商户充值' },
   { value: 2652, name: '临停缴费' },
   { value: 1494, name: '管理费' },

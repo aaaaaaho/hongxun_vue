@@ -1,78 +1,98 @@
 <template>
-  <div class="app-container">
+  <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form-item label="操作模块">
+        <el-input v-model="formInline.module" placeholder="操作模块"></el-input>
+      </el-form-item>
+      <el-form-item label="操作人">
+        <el-input v-model="formInline.name" placeholder="操作人"></el-input>
+      </el-form-item>
+      <el-form-item label="操作内容">
+        <el-input v-model="formInline.content" placeholder="操作内容"></el-input>
+      </el-form-item>
+
+      <el-form-item label="开始时间">
+        <div class="block">
+          <span class="demonstration"></span>
+          <el-date-picker
+            v-model="formInline.date_start"
+            align="right"
+            type="date"
+            placeholder="选择日期"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+        </div>
+      </el-form-item>
+
+      <el-form-item label="结束时间">
+        <div class="block">
+          <span class="demonstration"></span>
+          <el-date-picker
+            v-model="formInline.date_fin"
+            align="right"
+            type="date"
+            placeholder="选择日期"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+        </div>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" @click="">查询</el-button>
+      </el-form-item>
+    </el-form>
     <el-table
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="Loading"
-      border
-      fit
-      highlight-current-row
-    >
-      <el-table-column align="center" label="ID" width="95">
-        <template slot-scope="scope">
-          {{ scope.$index }}
-        </template>
+      :data="tableData"
+      style="width: 100%">
+      <el-table-column align="center"
+                       prop="module"
+                       label="操作模块">
       </el-table-column>
-      <el-table-column label="Title">
-        <template slot-scope="scope">
-          {{ scope.row.title }}
-        </template>
+      <el-table-column align="center"
+                       prop="name"
+                       label="操作人">
       </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
-        </template>
+      <el-table-column align="center"
+                       prop="content"
+                       label="操作内容">
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.pageviews }}
-        </template>
-      </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.display_time }}</span>
-        </template>
+      <el-table-column align="center"
+                       prop="date"
+                       label="操作时间">
       </el-table-column>
     </el-table>
-  </div>
+  </el-row>
 </template>
+
 
 <script>
 import { getList } from '@/api/table'
 
 export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
-      list: null,
-      listLoading: true
-    }
-  },
-  created() {
-    this.fetchData()
-  },
-  methods: {
-    fetchData() {
-      this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
+      tableData: [{
+        module:'月租用户',
+        name:'wk',
+        content:'无',
+        date:'2021-08-01 20:14:52'
+      },{
+        module:'长租用户',
+        name:'wk',
+        content:'无',
+        date:'2021-08-02 20:42:52'
+      }
+      ],
+
+
+      formInline: {
+        module:'',
+        name:'',
+        content:'',
+        date:'',
+        date_start:'',
+        date_fin:''
+      },
     }
   }
 }
