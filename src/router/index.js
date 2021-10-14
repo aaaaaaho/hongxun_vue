@@ -307,6 +307,31 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/com_Test',
+    name: 'test',
+    meta: {
+      title: '测试页面',
+      // icon: '权限管理'
+    },
+    children: [
+      {
+      path: 'com_Test',
+      component: () => import('@/views/com_Test/index'),
+      name: 'test',
+      meta: { title: '测试页面' }
+      },
+      {
+        path: 'page_Test',
+        component: () => import('@/views/com_Test/page_Test'),
+        name: 'test',
+        meta: { title: '展示页面测试' }
+      }
+    ]
+  },
+
   // {
   //   path: 'external-link',
   //   component: Layout,

@@ -66,7 +66,7 @@ export default {
       this.setOptions(this.chartData)
     },
 
-    setOptions({testData,testData_2,testData_3,testData_4,testData_5}={}) {
+    setOptions({testData,testData_2}={}) {
       this.chart.setOption({
         title: {
           text: '车流量分析',
@@ -75,7 +75,9 @@ export default {
           padding: 10
         },
         xAxis: {
-          data: ['周一', '周二','周三','周四','周五','周六','周日'],
+          data: ['1日','2日','3日','4日','5日','6日','7日','8日','9日','10日',
+            '10日','11日','12日','13日','14日','15日', '16日','17日','18日','19日','20日'
+            ,'21日','22日','23日','24日','25日','26日','27日','28日','29日','30日', '31日'],
           // boundaryGap: false,
           axisTick: {
             show: false
@@ -134,62 +136,7 @@ export default {
             barWidth :'20%',
             stack:'amount',
             animationEasing: 'quadraticOut'
-          },
-          {
-            name: '管理费',
-            // smooth: true,
-            type: 'bar',
-            itemStyle: {
-              normal: {
-                color: '#fc0689',
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
-              }
-            },
-            data: testData_3,
-            animationDuration: 1500,
-            barWidth :'20%',
-            stack:'amount',
-            animationEasing: 'quadraticOut'
-          },
-          {
-            name: '储值卡',
-            // smooth: true,
-            type: 'bar',
-            itemStyle: {
-              normal: {
-                color: '#e39f14',
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
-              }
-            },
-            data: testData_4,
-            animationDuration: 1500,
-            barWidth :'20%',
-            stack:'amount',
-            animationEasing: 'quadraticOut'
-          },
-          {
-            name: '商户充值',
-            // smooth: true,
-            type: 'bar',
-            itemStyle: {
-              normal: {
-                color: '#14b30d',
-                areaStyle: {
-                  color: '#f3f8ff'
-                }
-              }
-            },
-            data: testData_5,
-            animationDuration: 1500,
-            barWidth :'20%',
-            stack:'amount',
-            animationEasing: 'quadraticOut'
-          },
-
+          }
         ]
       })
     }

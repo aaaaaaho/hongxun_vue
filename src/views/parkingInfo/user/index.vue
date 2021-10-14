@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { parkingInfo_user } from '@/api/parkingInfo'
 
 export default {
   filters: {
@@ -134,16 +134,14 @@ export default {
     }
   },
   created() {
-    // this.fetchData()
+    this.getHandle()
   },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // }
+    getHandle() {
+      parkingInfo_user().then(res => {
+        this.list = res.data.list
+      })
+    }
   }
 }
 </script>

@@ -91,8 +91,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
-
+import { parkingRecord_presence } from '@/api/parkRecord'
 export default {
   filters: {
     statusFilter(status) {
@@ -116,7 +115,7 @@ export default {
           group: '鸿迅停车',
           time: '2h',
           date: '2021-6-5',
-          url: require('../presence/statics/1.jpg')
+          url : ''
         },
         {
           id: 2,
@@ -125,7 +124,7 @@ export default {
           group: '无',
           time: '15min',
           date: '2021-6-6',
-          url: require('../presence/statics/4.jpg')
+          url: ''
         }
       ],
 
@@ -168,16 +167,20 @@ export default {
     }
   },
   created() {
-    // this.fetchData()
+    this.getHandle()
   },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // }
+    getHandle() {
+      parkingRecord_presence().then(res => {
+        this.list = res.data.list
+        console.log(res.data.list)
+      })
+    },
+    getImgUrl(src){
+      return require("@/assets/carPic/" +src +'.jpg') //动态请求项目内固定路径图片
+    },
+
+
   }
 }
 </script>

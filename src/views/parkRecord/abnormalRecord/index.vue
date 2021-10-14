@@ -61,29 +61,24 @@
           {{ scope.row.plate }}
         </template>
       </el-table-column>
-      <el-table-column label="授权分组" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.group }}
-        </template>
-      </el-table-column>
       <el-table-column label="入场时间"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.date }}
+          {{ scope.row.time_in }}
         </template>
       </el-table-column>
       <el-table-column label="结束时间"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.date_fin }}
+          {{ scope.row.time_out }}
+        </template>
+      </el-table-column>
+      <el-table-column label="时长"  align="center">
+        <template slot-scope="scope">
+          {{ scope.row.time }}
         </template>
       </el-table-column>
       <el-table-column label="放行原因"  align="center">
         <template slot-scope="scope">
           {{ scope.row.cause }}
-        </template>
-      </el-table-column>
-      <el-table-column label="车主"  align="center">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
         </template>
       </el-table-column>
       <el-table-column  label="图片" align="center">
@@ -112,8 +107,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
-
+import { parkingRecord_abnormalRecord, parkingRecord_parkDetail } from '@/api/parkRecord'
 export default {
   filters: {
     statusFilter(status) {
@@ -132,25 +126,21 @@ export default {
       list: [
         {
           id: 1,
-          name: 'wk',
-          plate: '闽A77518',
-          group: '鸿迅停车',
+          plate:'test',
           time: '2h',
-          date: '2021-6-5',
-          date_fin:'2021-6-7',
-          cause:'警车',
-          url: require('../presence/statics/1.jpg')
+          time_in: '2021-6-5',
+          time_out:'2021-6-7',
+          cause: '',
+          url: '',
         },
         {
-          id: 2,
-          name: 'wk_2',
-          plate: '苏D88888',
-          group: '无',
-          time: '15min',
-          date: '2021-6-6',
-          date_fin: '2021-6-8',
-          cause:'警车',
-          url: require('../presence/statics/4.jpg')
+          id: 1,
+          plate:'test',
+          time: '2h',
+          time_in: '2021-6-5',
+          time_out:'2021-6-7',
+          cause: '',
+          url: '',
         }
       ],
 
@@ -163,15 +153,6 @@ export default {
         date_fin:'',
         cause:''
       },
-
-      parkingDetail:[{
-        parkingTimes:891,
-        amount:5538,//应收金额
-        discountedAmount:120,
-        deductionAmount:55,
-        abnormalAmount:35,
-        actualAmount:5328,
-      }],
 
       pickerOptions: {
         disabledDate(time) {
@@ -201,16 +182,14 @@ export default {
     }
   },
   created() {
-    // this.fetchData()
+    this.getHandle()
   },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // }
+    getHandle() {
+      parkingRecord_abnormalRecord().then(res => {
+        this.list = res.data.list
+      })
+    }
   }
 }
 </script>

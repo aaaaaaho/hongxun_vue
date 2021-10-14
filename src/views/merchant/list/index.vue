@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { merchant_list } from '@/api/merchant'
 
 export default {
   filters: {
@@ -114,16 +114,14 @@ export default {
     }
   },
   created() {
-    // this.fetchData()
+    this.getHandle()
   },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // }
+    getHandle(){
+      merchant_list().then(res => {
+        this.list = res.data.list
+      })
+    }
   }
 }
 </script>

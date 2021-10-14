@@ -94,8 +94,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
-
+import { parkingRecord_recharge } from '@/api/parkRecord'
 export default {
   filters: {
     statusFilter(status) {
@@ -175,16 +174,14 @@ export default {
     }
   },
   created() {
-    // this.fetchData()
+    this.getHandle()
   },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // }
+    getHandle(){
+      parkingRecord_recharge().then(res => {
+        this.list = res.data.list
+      })
+    }
   }
 }
 </script>

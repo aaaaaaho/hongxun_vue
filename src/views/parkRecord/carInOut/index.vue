@@ -27,7 +27,7 @@
       </el-form-item>
     </el-form>
 
-    <el-table :data="list">
+    <el-table :data="list.slice((currentPage-1)*pageSize,currentPage*pageSize)">
       <!--      v-loading="listLoading"-->
       <!--      :data="list"-->
       <!--      element-loading-text="Loading"-->
@@ -81,11 +81,23 @@
       <!--        </template>-->
       <!--      </el-table-column>-->
     </el-table>
+    <div class="block">
+      <span class="demonstration"></span>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
+        layout="total, prev, pager, next"
+        :total="list.length">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
+
+import { parkingRecord_carInOut } from '@/api/parkRecord'
 
 export default {
   filters: {
@@ -155,22 +167,27 @@ export default {
           }
         }],
 
-        value:''
-
-      }
+        value:'',
+      },
+      currentPage: 1,
+      pageSize: 10,
     }
   },
   created() {
-    // this.fetchData()
+    this.getHandle()
   },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // }
+      getHandle(){
+        parkingRecord_carInOut().then(res => {
+          this.list = res.data.list
+        })
+      },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    }
   }
 }
 </script>

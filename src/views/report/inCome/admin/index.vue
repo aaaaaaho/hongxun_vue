@@ -3,7 +3,15 @@
 <!--    <github-corner class="github-corner" />-->
 
 <!--    <panel-group @handleSetLineChartData="handleSetLineChartData" />-->
-
+    <div class="block">
+      <span class="demonstration"></span>
+      <el-date-picker
+        v-model="value2"
+        type="month"
+        placeholder="选择月">
+      </el-date-picker>
+    </div>
+    <br/>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData_2" />
     </el-row>
@@ -59,20 +67,18 @@ import BarChart from './components/BarChart'
 // import BoxCard from './components/BoxCard'
 
 const lineChartData = {
-  newVisitis: {
-    testData: [1000, 5000, 1550, 3330, 3000, 5032, 2500, 5000, 3600, 2788],
+    testData: [1000, 18000, 1550, 3330, 3000, 5032, 2500, 5000, 3600, 2788],
     testData_2: [2500, 1005, 2152, 5234, 1234, 2543, 1234, 1550, 1543, 1550]
-  }
+
 }
 
 const barChartData = {
-  newVisitis: {
       testData: [312,345,657,867,978,931,312],
       testData_2: [123,345,200,200,123,235,123],
       testData_3: [200,123,432,645,200,123,645],
       testData_4: [453,200,534,200,765,423,745],
-      testData_5: [200,123,123,321,543,765,624],
-  }
+      testData_5: [200,123,123,321,543,765,624]
+
 }
 
 const pieChartData =[
@@ -104,10 +110,12 @@ export default {
   },
   data() {
     return {
-      lineChartData_2: lineChartData.newVisitis,
-      barChartData: barChartData.newVisitis,
+      lineChartData_2: lineChartData,
+      barChartData: barChartData,
       pieChartData: pieChartData,
-      pieChartData_2 : pieChartData_2
+      pieChartData_2 : pieChartData_2,
+
+      value2 :'',
     }
   },
   methods: {

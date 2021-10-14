@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { parkingInfo_list } from '@/api/parkingInfo'
 
 export default {
   filters: {
@@ -160,23 +160,21 @@ export default {
       pageSize: 10,
     }
   },
-  created() {
-    // this.fetchData()
-  },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // }
+    getHandle() {
+      parkingInfo_list().then(res => {
+        this.list = res.data.list
+      })
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     }
-  }
+  },
+  created() {
+    this.getHandle()
+  },
 }
 </script>

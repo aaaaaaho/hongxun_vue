@@ -81,11 +81,6 @@
           {{ scope.row.actualAmount }}
         </template>
       </el-table-column>
-      <el-table-column label="优惠金额"  align="center">
-        <template slot-scope="scope">
-          {{ scope.row.discountAmount }}
-        </template>
-      </el-table-column>
       <!--      <el-table-column class-name="status-col" label="Status" width="110" align="center">-->
       <!--        <template slot-scope="scope">-->
       <!--          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>-->
@@ -102,7 +97,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { parkingRecord_shiftRecord } from '@/api/parkRecord'
 
 export default {
   filters: {
@@ -129,9 +124,6 @@ export default {
           time_fin:'2022-07-16-8:51:27',
           amount:281,//应收金额
           actualAmount:261,
-          discountAmount:20,
-          deductionAmount:20,
-          deductionTimes:1,
         },
         {
           id:2,
@@ -142,9 +134,6 @@ export default {
           time_fin:'2022-07-16-8:51:27',
           amount:281,//应收金额
           actualAmount:261,
-          discountAmount:20,
-          deductionAmount:20,
-          deductionTimes:1,
         }
       ],
 
@@ -187,16 +176,14 @@ export default {
     }
   },
   created() {
-    // this.fetchData()
+    this.getHandle()
   },
   methods: {
-    // fetchData() {
-    //   this.listLoading = true
-    //   getList().then(response => {
-    //     this.list = response.data.items
-    //     this.listLoading = false
-    //   })
-    // }
+    getHandle(){
+      parkingRecord_shiftRecord().then(res => {
+        this.list = res.data.list
+      })
+    }
   }
 }
 </script>
