@@ -20,7 +20,7 @@
     </el-form>
     <el-row :gutter="32">
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <bar-chart id="barchart" :chart-data="barChartData" />
+      <bar-chart id="barchart" :auto-resize="true" />
     </el-row>
     </el-row>
   </div>
@@ -41,7 +41,7 @@ export default {
     return {
       barChartData: {
         testData: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        testData_2: []
+        testData_2: [10,20,30,0,0,0,0,0,0,0,0,0,0]
       },
 
       formInline: {
@@ -85,32 +85,29 @@ export default {
     }
   },
   created(){
-    this.getListData()
-  },
-  mounted() {
-
+    // this.getListData()
   },
   methods: {
-    getListData(){
-      business_traffic().then(res => {
-        this.list = res.data.list
-        // console.log(this.list[0].time)
-        // const test1 = this.list[0].time
-        // const test2 = test1.split("-")
-        // console.log(test2[0])
-        // console.log(test2[1])
-        // console.log(test2[2])
-        // console.log(test2[3])
-        // console.log(Number(this.list[0].time.split("-")[2]))
-        for(let i= 0; i<this.list.length; i++){
-          let x1 = Number(this.list[i].time.split("-")[2]) - 1
-          if(x1 !== 0){
-            this.barChartData.testData[x1]= this.barChartData.testData[x1] + 1
-          }
-        }
-        console.log(this.barChartData.testData[5])
-      })
-    },
+    // getListData(){
+    //   business_traffic().then(res => {
+    //     this.list = res.data.list
+    //     // console.log(this.list[0].time)
+    //     // const test1 = this.list[0].time
+    //     // const test2 = test1.split("-")
+    //     // console.log(test2[0])
+    //     // console.log(test2[1])
+    //     // console.log(test2[2])
+    //     // console.log(test2[3])
+    //     // console.log(Number(this.list[0].time.split("-")[2]))
+    //     for(let i= 0; i<this.list.length; i++){
+    //       let x1 = Number(this.list[i].time.split("-")[2]) - 1
+    //       if(x1 !== 0){
+    //         this.barChartData.testData[x1]= this.barChartData.testData[x1] + 1
+    //       }
+    //     }
+    //     console.log(this.barChartData.testData[5])
+    //   })
+    // },
 
   }
 }

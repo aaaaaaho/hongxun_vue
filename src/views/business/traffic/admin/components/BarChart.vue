@@ -6,6 +6,7 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import { business_traffic } from '@/api/business'
 
 export default {
   mixins: [resize],
@@ -33,11 +34,12 @@ export default {
   },
   data() {
     return {
-      chart: null,
-      // testData: [150, 50, 50, 50, 50, 50, 50, 50, 50, 50],
-      // testData_2: [50, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-      // testData_3: [70, 20, 20, 20, 20, 20, 20, 20, 20, 20],
-      // testData_4: [60, 30, 30, 30, 30, 30, 30, 30, 30, 30]
+      chartData: null,
+      list: [],
+      barChartData: {
+        testData: [10,10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        testData_2: [10,20,30,0,0,0,0,0,0,0,0,0,0]
+      },
     }
   },
   watch: {
@@ -53,6 +55,9 @@ export default {
       this.initChart()
     })
   },
+  created() {
+    this.getListData()
+  },
   beforeDestroy() {
     if (!this.chart) {
       return
@@ -63,7 +68,19 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+      this.setOptions(this.barChartData)
+    },
+
+    getListData(){
+      business_traffic().then(res => {
+        this.list = res.data.list
+        for(let i= 0; i<this.list.length; i++){
+          let x1 = Number(this.list[i].time.split("-")[2]) - 1
+          if(x1 !== 0){
+            this.barChartData.testData[x1]= this.barChartData.testData[x1] + 1
+          }
+        }
+      })
     },
 
     setOptions({testData,testData_2}={}) {
@@ -139,6 +156,7 @@ export default {
           }
         ]
       })
+
     }
   }
 }

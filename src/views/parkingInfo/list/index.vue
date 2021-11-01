@@ -10,15 +10,13 @@
       <el-form-item>
         <el-button type="primary" @click="">查询</el-button>
       </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="output_Excel">导出Excel</el-button>
+      </el-form-item>
     </el-form>
 
-    <el-table :data="list.slice((currentPage-1)*pageSize,currentPage*pageSize)">
-<!--      v-loading="listLoading"-->
-<!--      :data="list"-->
-<!--      element-loading-text="Loading"-->
-<!--      border-->
-<!--      fit-->
-<!--      highlight-current-row-->
+    <el-table :data="list.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+    id="parkingInfo_list">
       <el-table-column align="center" label="车场编号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -39,17 +37,6 @@
           {{ scope.row.num }}
         </template>
       </el-table-column>
-<!--      <el-table-column class-name="status-col" label="Status" width="110" align="center">-->
-<!--        <template slot-scope="scope">-->
-<!--          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column align="center" prop="created_at" label="Display_time" width="200">-->
-<!--        <template slot-scope="scope">-->
-<!--          <i class="el-icon-time" />-->
-<!--          <span>{{ scope.row.display_time }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
     </el-table>
     <div class="block">
       <span class="demonstration"></span>
@@ -62,11 +49,16 @@
         :total="list.length">
       </el-pagination>
     </div>
+
   </div>
 </template>
 
 <script>
 import { parkingInfo_list } from '@/api/parkingInfo'
+import FileSaver from "file-saver"
+import XLSX from "xlsx"
+
+
 
 export default {
   filters: {
@@ -171,8 +163,31 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-    }
+    },
+    output_Excel(){
+      var wb = XLSX.utils.table_to_book(document.querySelector("#parkingInfo_list"))
+      var wbout = XLSX.write(wb,
+        {
+          bookType: "xlsx",
+          bookSST: true,
+          type: "array"
+        }
+        );
+      try{
+       FileSaver.saveAs(
+         new Blob([wbout],{type:"application/octet-stream"}),
+         "sheet.xlsx"
+       )
+      }catch (e){
+        if (typeof console !== "undefined") console.log(e,wbout);
+      }
+      return wbout
+    },
   },
+
+
+
+
   created() {
     this.getHandle()
   },
