@@ -147,6 +147,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '//merchant/list',
     name: 'Nested',
+    hidden: true,
     meta: {
       title: '商户管理',
       icon: '商户管理'
@@ -251,6 +252,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/discount/discountRule',
     name: 'Discount',
+    hidden: true,
     meta: {
       title: '优惠管理',
       icon: '优惠管理'
@@ -328,7 +330,14 @@ export const constantRoutes = [
         component: () => import('@/views/com_Test/page_Test'),
         name: 'test',
         meta: { title: '展示页面测试' }
-      }
+      },
+      {
+        path: 'sensor',
+        component: () => import('@/views/com_Test/sensor_test'),
+        name: 'test',
+        meta: { title: '传感器展示页面' }
+      },
+
     ]
   },
 

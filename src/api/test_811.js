@@ -20,3 +20,14 @@ export function page_test(){
     method: 'get'
   })
 }
+
+
+export function search_test(data){
+  return request({
+    url: 'api/search/test_1',
+    method: 'post',
+    data
+
+
+  })
+}

@@ -4,19 +4,51 @@
       <el-form-item label="车场名称">
         <el-input v-model="formInline.user" placeholder="车场名称"></el-input>
       </el-form-item>
-      <el-form-item label="车场id">
-        <el-input v-model="formInline.id" placeholder="车场id"></el-input>
+      <el-form-item label="车场地址">
+        <el-input v-model="formInline.address" placeholder="车场地址"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="">查询</el-button>
+        <el-button @click="clear_formInline">清空</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="output_Excel">导出Excel</el-button>
+        <el-button type="primary" @click="search_handle(formInline)">查询</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="output_Excel">导出Excel(全部)</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="output_Excel_2">导出列表Excel(当前)</el-button>
       </el-form-item>
     </el-form>
-
-    <el-table :data="list.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-    id="parkingInfo_list">
+<!--    这一部分是为了导出excel-->
+    <el-table :data="list"
+              id="parkingInfo_list"
+              width="0"
+              height="0"
+    >
+      <el-table-column align="center" label="车场编号" width="95">
+        <template slot-scope="scope">
+          {{ scope.$index + 1 }}
+        </template>
+      </el-table-column>
+      <el-table-column label="车场名称" width="200" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column label="车场地址" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.address }}
+        </template>
+      </el-table-column>
+      <el-table-column label="车位数" width="110" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.num }}
+        </template>
+      </el-table-column>
+    </el-table >
+    <el-table :data="list_2.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+    id="parkingInfo_list_2">
       <el-table-column align="center" label="车场编号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -57,6 +89,7 @@
 import { parkingInfo_list } from '@/api/parkingInfo'
 import FileSaver from "file-saver"
 import XLSX from "xlsx"
+import { search_test } from '@/api/test_811'
 
 
 
@@ -143,10 +176,10 @@ export default {
           num:101
         },
       ],
-
+      list_2 : '',
       formInline: {
         user: '',
-        id: ''
+        address: ''
       },
       currentPage: 1,
       pageSize: 10,
@@ -156,6 +189,7 @@ export default {
     getHandle() {
       parkingInfo_list().then(res => {
         this.list = res.data.list
+        this.list_2 = res.data.list
       })
     },
     handleSizeChange(val) {
@@ -176,13 +210,46 @@ export default {
       try{
        FileSaver.saveAs(
          new Blob([wbout],{type:"application/octet-stream"}),
-         "sheet.xlsx"
+         "列表(全部).xlsx"
        )
       }catch (e){
         if (typeof console !== "undefined") console.log(e,wbout);
       }
       return wbout
     },
+
+    output_Excel_2(){
+      var wb = XLSX.utils.table_to_book(document.querySelector("#parkingInfo_list_2"))
+      var wbout = XLSX.write(wb,
+        {
+          bookType: "xlsx",
+          bookSST: true,
+          type: "array"
+        }
+      );
+      try{
+        FileSaver.saveAs(
+          new Blob([wbout],{type:"application/octet-stream"}),
+          "列表(当前).xlsx"
+        )
+      }catch (e){
+        if (typeof console !== "undefined") console.log(e,wbout);
+      }
+      return wbout
+    },
+
+    search_handle(data){
+      search_test(data).then(res => {
+        this.list_2 = res.data.list
+      }).catch(()=>{
+        console.log(+"-------------------")
+        console.log("接口调用错误")
+      })
+    },
+
+    clear_formInline(){
+      this.formInline = {user : '' , address: ''}
+    }
   },
 
 
