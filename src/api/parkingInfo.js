@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function parkingInfo_list(){
   return request({
-    url:'api/parkinginfo/list',
+    url:'http://47.113.191.6:1102/carPark/list/findAll',
     // 'http://47.113.191.6:1102/admin/carPark/list/findAll'
     method: 'get'
   })

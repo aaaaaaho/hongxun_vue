@@ -22,12 +22,25 @@ export function page_test(){
 }
 
 
-export function search_test(data){
+export function search_test(current,limit,carParkQuery){
   return request({
-    url: 'api/search/test_1',
+    url: `http://47.113.191.6:1102/carPark/list/selectConditionCarPark/${current}/${limit}`,
     method: 'post',
-    data
+    data: carParkQuery
+  })
+}
 
+export function delete_test(carParkId){
+  return request({
+    url:`http://47.113.191.6:1102/carPark/list/deleteCarPark/${carParkId}`,
+    method:'delete',
+  })
+}
 
+export function add_test(data){
+  return request({
+    url:'http://47.113.191.6:1102/carPark/list/addCarPark',
+    method:'post',
+    data: data,
   })
 }
