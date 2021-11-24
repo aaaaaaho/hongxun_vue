@@ -15,10 +15,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="output_Excel">导出Excel(全部)</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="output_Excel_2">导出列表Excel(当前)</el-button>
+        <el-button type="primary" @click="output_Excel">导出Excel</el-button>
       </el-form-item>
 
       <el-form-item>
@@ -26,34 +23,7 @@
       </el-form-item>
 
     </el-form>
-<!--    这一部分是为了导出excel-->
     <el-table :data="list"
-              id="parkingInfo_list"
-              width="0"
-              height="0"
-    >
-      <el-table-column align="center" label="车场编号" width="95">
-        <template slot-scope="scope">
-          {{ scope.$index + 1 }}
-        </template>
-      </el-table-column>
-      <el-table-column label="车场名称" width="200" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
-      <el-table-column label="车场地址" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.address }}
-        </template>
-      </el-table-column>
-      <el-table-column label="车位数" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.num }}
-        </template>
-      </el-table-column>
-    </el-table >
-    <el-table :data="list_2"
     id="parkingInfo_list_2">
       <el-table-column align="center" label="车场编号" width="95">
         <template slot-scope="scope">
@@ -236,75 +206,6 @@ export default {
         },
       ],
 
-      list_2 : [
-        {
-          id:1,
-          name:'青岛路机器人停车库',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号',
-          num:100
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-      ],
-
       carParkQuery: {
         name:'',
         address:''
@@ -366,18 +267,13 @@ export default {
       // })
       this.page = page
       search_test(this.page,this.limit, this.carParkQuery).then(res=> {
-        this.list_2 = res.data.records
+        this.list = res.data.records
         this.total = res.data.total
-        console.log(this.list_2)
+        console.log(this.list)
         console.log(this.total)
       })
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    },
+
     output_Excel(){
       var wb = XLSX.utils.table_to_book(document.querySelector("#parkingInfo_list"))
       var wbout = XLSX.write(wb,
@@ -398,25 +294,6 @@ export default {
       return wbout
     },
 
-    output_Excel_2(){
-      var wb = XLSX.utils.table_to_book(document.querySelector("#parkingInfo_list_2"))
-      var wbout = XLSX.write(wb,
-        {
-          bookType: "xlsx",
-          bookSST: true,
-          type: "array"
-        }
-      );
-      try{
-        FileSaver.saveAs(
-          new Blob([wbout],{type:"application/octet-stream"}),
-          "列表(当前).xlsx"
-        )
-      }catch (e){
-        if (typeof console !== "undefined") console.log(e,wbout);
-      }
-      return wbout
-    },
     clear_formInline(){
       this.formInline = {user : '' , address: ''}
     },
@@ -450,15 +327,11 @@ export default {
       this.getList()
     },
 
-
-
     resetForm() {
       this.ruleForm = {}
     },
 
   },
-
-
 
   created() {
     this.getList()
