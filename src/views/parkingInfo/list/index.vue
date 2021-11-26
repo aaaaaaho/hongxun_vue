@@ -17,14 +17,13 @@
       <el-form-item>
         <el-button type="primary" @click="output_Excel">导出Excel</el-button>
       </el-form-item>
-
       <el-form-item>
-        <el-button type="primary" @click="dialogVisible = true">添加</el-button>
+        <el-button type="primary" @click="dialogVisible_add = true">添加</el-button>
       </el-form-item>
 
     </el-form>
     <el-table :data="list"
-    id="parkingInfo_list_2">
+    id="parkingInfo_list">
       <el-table-column align="center" label="车场编号" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -47,7 +46,7 @@
       </el-table-column>
       <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" >修改</el-button>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click = "editDataById(scope.$index)" >修改</el-button>
             <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeDataById(scope.row.id)">删除</el-button>
           </template>
       </el-table-column>
@@ -66,7 +65,7 @@
 
     <el-dialog
       title="提示"
-      :visible.sync="dialogVisible"
+      :visible.sync="dialogVisible_add"
       >
       <span>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -110,6 +109,54 @@
         <el-button type="primary" @click="submitForm()">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible_edit"
+    >
+      <span>
+      <el-form :model="editForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+        <el-form-item label="停车场名称" prop="name">
+          <el-input v-model="editForm.name"></el-input>
+        </el-form-item>
+
+        <el-form-item label="车位数" prop="carNum">
+          <el-input v-model="editForm.carNum"></el-input>
+        </el-form-item>
+
+        <el-form-item label="联系人名字" prop="contactPerson">
+          <el-input v-model="editForm.contactPerson"></el-input>
+        </el-form-item>
+
+        <el-form-item label="联系人电话" prop="contactPhone">
+          <el-input v-model="editForm.contactPhone"></el-input>
+        </el-form-item>
+
+        <el-form-item label="入口数" prop="entranceNum">
+          <el-input v-model="editForm.entranceNum"></el-input>
+        </el-form-item>
+
+        <el-form-item label="出口数" prop="exitNum">
+          <el-input v-model="editForm.exitNum"></el-input>
+        </el-form-item>
+
+        <el-form-item label="地址" prop="address">
+          <el-input v-model="editForm.address"></el-input>
+        </el-form-item>
+
+        <el-form-item label="车场图片" prop="image">
+          <el-input v-model="editForm.image"></el-input>
+        </el-form-item>
+
+      </el-form>
+      </span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="resetForm()">重 置</el-button>
+        <el-button type="primary" @click="submitForm()">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 
 </template>
@@ -135,8 +182,7 @@ export default {
   },
   data() {
     return {
-      // list: null,
-      // listLoading: true
+
       list:[
         {
         id:1,
@@ -218,7 +264,8 @@ export default {
       formInline:{
       },
 
-      dialogVisible: false ,
+      dialogVisible_add: false ,
+      dialogVisible_edit: false,
 
       ruleForm: {
         name: '',
@@ -255,7 +302,9 @@ export default {
         image: [
           { required: true, message: '请输入', trigger: 'blur' }
         ]
-      }
+      },
+
+      editForm:{},
 
     }
   },
@@ -298,6 +347,15 @@ export default {
       this.formInline = {user : '' , address: ''}
     },
 
+
+    editDataById(id){
+      this.dialogVisible_edit = true
+      console.log(id)
+      console.log(this.list[id])
+      this.editForm = this.list[id]
+      console.log(this.editForm)
+    },
+
     removeDataById(id){
       this.$confirm('此操作将永久删除记录, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -322,7 +380,7 @@ export default {
           message: '添加成功!'
         });
       })
-      this.dialogVisible = false
+      this.dialogVisible_add = false
       this.ruleForm = {}
       this.getList()
     },
