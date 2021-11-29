@@ -15,7 +15,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="output_Excel">导出Excel</el-button>
+        <el-button type="primary" @click="output_excel()">导出Excel</el-button>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="dialogVisible_add = true">添加</el-button>
@@ -46,7 +46,7 @@
       </el-table-column>
       <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" icon="el-icon-edit" @click = "editDataById(scope.$index)" >修改</el-button>
+            <el-button type="primary" size="mini" icon="el-icon-edit" @click = "editDataById(scope.row.id)" >修改</el-button>
             <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeDataById(scope.row.id)">删除</el-button>
           </template>
       </el-table-column>
@@ -64,7 +64,7 @@
     </div>
 
     <el-dialog
-      title="提示"
+      title="添加框"
       :visible.sync="dialogVisible_add"
       >
       <span>
@@ -111,7 +111,7 @@
     </el-dialog>
 
     <el-dialog
-      title="提示"
+      title="编辑框"
       :visible.sync="dialogVisible_edit"
     >
       <span>
@@ -153,7 +153,7 @@
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="resetForm()">重 置</el-button>
-        <el-button type="primary" @click="submitForm()">确 定</el-button>
+        <el-button type="primary" @click="editDataById_2()">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -162,10 +162,9 @@
 </template>
 
 <script>
-import { parkingInfo_list } from '@/api/parkingInfo'
 import FileSaver from "file-saver"
 import XLSX from "xlsx"
-import { delete_test, search_test, add_test } from '@/api/test_811'
+import { delete_test, search_test, add_test, excel_output, update_test, searchById } from '@/api/parkingInfo'
 
 
 
@@ -189,67 +188,7 @@ export default {
         name:'青岛路机器人停车库',
         address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号',
         num:100
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
-        {
-          id:2,
-          name:'青岛路机器人停车库_2',
-          address:'湖北省/武汉市/江岸区/湖北省武汉市江岸区青岛路7号_2',
-          num:101
-        },
+        }
       ],
 
       carParkQuery: {
@@ -310,10 +249,6 @@ export default {
   },
   methods: {
     getList(page = 1) {
-      // parkingInfo_list().then(res => {
-      //   this.list = res.data.items
-      //   this.list_2 = res.data.items
-      // })
       this.page = page
       search_test(this.page,this.limit, this.carParkQuery).then(res=> {
         this.list = res.data.records
@@ -323,37 +258,29 @@ export default {
       })
     },
 
-    output_Excel(){
-      var wb = XLSX.utils.table_to_book(document.querySelector("#parkingInfo_list"))
-      var wbout = XLSX.write(wb,
-        {
-          bookType: "xlsx",
-          bookSST: true,
-          type: "array"
-        }
-        );
-      try{
-       FileSaver.saveAs(
-         new Blob([wbout],{type:"application/octet-stream"}),
-         "列表(全部).xlsx"
-       )
-      }catch (e){
-        if (typeof console !== "undefined") console.log(e,wbout);
-      }
-      return wbout
-    },
-
     clear_formInline(){
       this.formInline = {user : '' , address: ''}
     },
 
-
+    //
     editDataById(id){
+      // this.editForm = vm.list[id]
       this.dialogVisible_edit = true
-      console.log(id)
-      console.log(this.list[id])
-      this.editForm = this.list[id]
-      console.log(this.editForm)
+      searchById(id).then(res=>{
+        this.editForm = res.data.carPark
+      })
+    },
+
+    editDataById_2(){
+      update_test(this.editForm).then(res=> {
+        this.$message({
+          type: 'success',
+          message: '编辑成功!'
+        });
+      })
+      this.dialogVisible_edit = false
+      this.editForm = {}
+      this.getList()
     },
 
     removeDataById(id){
@@ -389,10 +316,29 @@ export default {
       this.ruleForm = {}
     },
 
-  },
+    output_excel(){
+      window.location =
+        'http://47.113.191.6:1102/carPark/list/download'
+    },
+    // output_excel_2(){
+    //   excel_output().then(res=>{
+    //     let blob = new Blob([res], { type: 'application/xlsx' });
+    //     let url = window.URL.createObjectURL(blob);
+    //     const link = document.createElement('a'); //创建a标签
+    //     link.href = url;
+    //     link.download = '通用订单信息.xlsx'; //重命名文件
+    //     link.click();
+    //     URL.revokeObjectURL(url);
+    //   })
+    // },
+
+
+
+  },//method
+
 
   created() {
     this.getList()
-  },
+  }
 }
 </script>

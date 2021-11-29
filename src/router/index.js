@@ -72,13 +72,14 @@ export const constantRoutes = [
         path: 'longRent',
         name: 'longRent',
         component: () => import('@/views/parkingInfo/longRent/index'),
-        meta: { title: '长租用户' }
+        meta: { title: '长租用户' },
+        hidden: true
       },
       {
         path: 'user',
         name: 'user',
         component: () => import('@/views/parkingInfo/user/index'),
-        meta: { title: '月租用户' }
+        meta: { title: '用户列表' }
       },
       {
         path: 'specialCar',
