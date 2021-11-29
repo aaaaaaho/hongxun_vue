@@ -13,7 +13,6 @@
       <el-form-item>
         <el-button type="primary" @click="getList()">查询</el-button>
       </el-form-item>
-
       <el-form-item>
         <el-button type="primary" @click="output_excel()">导出Excel</el-button>
       </el-form-item>
@@ -262,7 +261,6 @@ export default {
       this.formInline = {user : '' , address: ''}
     },
 
-    //
     editDataById(id){
       // this.editForm = vm.list[id]
       this.dialogVisible_edit = true
@@ -320,22 +318,7 @@ export default {
       window.location =
         'http://47.113.191.6:1102/carPark/list/download'
     },
-    // output_excel_2(){
-    //   excel_output().then(res=>{
-    //     let blob = new Blob([res], { type: 'application/xlsx' });
-    //     let url = window.URL.createObjectURL(blob);
-    //     const link = document.createElement('a'); //创建a标签
-    //     link.href = url;
-    //     link.download = '通用订单信息.xlsx'; //重命名文件
-    //     link.click();
-    //     URL.revokeObjectURL(url);
-    //   })
-    // },
-
-
-
   },//method
-
 
   created() {
     this.getList()

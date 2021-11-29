@@ -1,24 +1,27 @@
 <template>
   <div class="app-container">
 
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-form :inline="true" :model="ruleForm" class="demo-form-inline">
       <el-form-item label="姓名">
-        <el-input v-model="formInline.name" placeholder="姓名"></el-input>
+        <el-input v-model="ruleForm.name" placeholder="姓名"></el-input>
       </el-form-item>
       <el-form-item label="车牌号">
-        <el-input v-model="formInline.plate" placeholder="车牌号"></el-input>
+        <el-input v-model="ruleForm.plate" placeholder="车牌号"></el-input>
       </el-form-item>
       <el-form-item label="手机号">
-        <el-input v-model="formInline.tel" placeholder="手机号"></el-input>
+        <el-input v-model="ruleForm.tel" placeholder="手机号"></el-input>
       </el-form-item>
-      <el-form-item label="授权分组">
-        <el-select v-model="formInline.group" placeholder="授权分组">
-          <el-option label="鸿迅集团" value="hongxun"></el-option>
-          <el-option label="武汉理工大学" value="wut"></el-option>
-        </el-select>
+      <el-form-item>
+        <el-button @click="resetForm">清空</el-button>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="">查询</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="">导出Excel</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="">添加</el-button>
       </el-form-item>
     </el-form>
 
@@ -49,37 +52,17 @@
           {{ scope.row.plate }}
         </template>
       </el-table-column>
-      <el-table-column label="授权分组" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.group }}
-        </template>
-      </el-table-column>
-      <el-table-column label="车位数" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.position_num }}
-        </template>
-      </el-table-column>
       <el-table-column label="有效期"  align="center">
         <template slot-scope="scope">
           {{ scope.row.time }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center">
-        <!--          {{ scope.row.num }}-->
-        <el-button icon="el-icon-edit"></el-button>
-        <el-button type="primary" @click="">充值</el-button>
+      <el-table-column label="操作" width="300" align="center">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" icon="el-icon-edit" @click = "" >修改</el-button>
+          <el-button type="danger" size="mini" icon="el-icon-delete" @click="">删除</el-button>
+        </template>
       </el-table-column>
-      <!--      <el-table-column class-name="status-col" label="Status" width="110" align="center">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
-      <!--      <el-table-column align="center" prop="created_at" label="Display_time" width="200">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <i class="el-icon-time" />-->
-      <!--          <span>{{ scope.row.display_time }}</span>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
     </el-table>
   </div>
 </template>
@@ -123,7 +106,7 @@ export default {
         }
       ],
 
-      formInline: {
+      ruleForm: {
         name: '',
         plate: '',
         tel:'',
@@ -141,7 +124,11 @@ export default {
       parkingInfo_user().then(res => {
         this.list = res.data.list
       })
-    }
+    },
+
+    resetForm() {
+      this.ruleForm = {}
+    },
   }
 }
 </script>
