@@ -77,4 +77,46 @@ export function searchById(carParkId){
   })
 }
 
+//=======================//
 
+export function carParkUserFindAll(){
+  return request({
+    url:'http://47.113.191.6:1102/carPark/user/findAll',
+    method:'get'
+  })
+}
+
+export function deleteCarParkUserById(carParkUserId){
+  return request({
+    url:`http://47.113.191.6:1102/carPark/user/deleteCarParkUser/${carParkUserId}`,
+    method:'delete',
+  })
+}
+
+export function addCarParkUser(data){
+  return request({
+    url:'http://47.113.191.6:1102/carPark/user/addCarParkUser',
+    method:'post',
+    data :data
+  })
+}
+
+export function selectConditionCarParkUser(current,limit,carParkQuery){
+  return request({
+    url: `http://47.113.191.6:1102/carPark/user/selectConditionCarParkUser/${current}/${limit}`,
+    method: 'post',
+    data: carParkQuery
+  })
+}
+
+export function editUpdateCarParkUser(data){
+  return request({
+    url: 'http://47.113.191.6:1102/carPark/user/updateCarParkUser',
+    method: 'post',
+    data :data
+  })
+}
+
+export function carParkUserSearchById(){
+
+}

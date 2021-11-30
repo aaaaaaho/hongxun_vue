@@ -43,6 +43,15 @@
           {{ scope.row.carNum }}
         </template>
       </el-table-column>
+      <el-table-column  label="车场图片" align="center">
+        <template slot-scope="scope">
+          <el-image style="width: 30px; height: 30px" :src="scope.row.image" :preview-src-list="[scope.row.image]">
+            <div slot="error" class="image-slot">
+              <i class="el-icon-picture-outline"></i>
+            </div>
+          </el-image>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" icon="el-icon-edit" @click = "editDataById(scope.row.id)" >修改</el-button>
@@ -98,7 +107,15 @@
         </el-form-item>
 
         <el-form-item label="车场图片" prop="image">
-          <el-input v-model="ruleForm.image"></el-input>
+          <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow=true">更换头像</el-button>
+          <!--
+          v-show：是否显示上传组件
+          :key：类似于id，如果一个页面多个图片上传控件，可以做区分
+          :url：后台上传的url地址
+          @close：关闭上传组件
+          @crop-upload-success：上传成功后的回调
+          <input type="file" name="file"/>
+          -->
         </el-form-item>
 
       </el-form>
@@ -161,13 +178,13 @@
 </template>
 
 <script>
-import FileSaver from "file-saver"
-import XLSX from "xlsx"
-import { delete_test, search_test, add_test, excel_output, update_test, searchById } from '@/api/parkingInfo'
+import { delete_test, search_test, add_test, update_test, searchById } from '@/api/parkingInfo'
 
-
+import ImageCropper from '@/components/ImageCropper'
 
 export default {
+  component:{ ImageCropper },
+
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -243,7 +260,7 @@ export default {
       },
 
       editForm:{},
-
+      imagecropperShow :false,
     }
   },
   methods: {
@@ -293,7 +310,7 @@ export default {
               type: 'success',
               message: '删除成功!'
             });
-            this.getList()
+            this.getHandle()
           })
       })
     },
@@ -304,7 +321,8 @@ export default {
           type: 'success',
           message: '添加成功!'
         });
-      })
+      }
+      )
       this.dialogVisible_add = false
       this.ruleForm = {}
       this.getList()
@@ -322,6 +340,6 @@ export default {
 
   created() {
     this.getList()
-  }
+  },
 }
 </script>
