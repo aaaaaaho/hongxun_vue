@@ -116,6 +116,16 @@
           @crop-upload-success：上传成功后的回调
           <input type="file" name="file"/>
           -->
+          <image-cropper
+            v-show="imagecropperShow"
+            :width="300"
+            :height="300"
+            :key="'addUploadImage'"
+            :url="'http://47.113.191.6:1302/oss/fileoss'"
+            field="file"
+            @close="close()"
+            @crop-upload-success="this.cropSuccess(url)"
+          />
         </el-form-item>
 
       </el-form>
@@ -183,8 +193,8 @@ import { delete_test, search_test, add_test, update_test, searchById } from '@/a
 import ImageCropper from '@/components/ImageCropper'
 
 export default {
+  components: { ImageCropper },
   component:{ ImageCropper },
-
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -341,5 +351,11 @@ export default {
   created() {
     this.getList()
   },
+
+  cropSuccess(data) {
+    this.imagecropperShow = false
+    this.list.image = data.url
+    this.imagecropperKey = this.imagecropperKey + 1
+  }
 }
 </script>

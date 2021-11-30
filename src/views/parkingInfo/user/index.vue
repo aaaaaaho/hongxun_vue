@@ -166,6 +166,7 @@ import {
   deleteCarParkUserById, editUpdateCarParkUser, searchById, selectConditionCarParkUser, update_test
 } from '@/api/parkingInfo'
 export default {
+
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -284,8 +285,7 @@ export default {
     searchUserByCondition(page = 1){
       this.page = page
       selectConditionCarParkUser(this.page,this.limit, this.carParkUserQuery).then(res=> {
-        this.list = res.data.items
-        console.log(this.list)
+        this.list = res.data.records
       })
     },
 
