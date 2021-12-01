@@ -117,6 +117,10 @@ export function editUpdateCarParkUser(data){
   })
 }
 
-export function carParkUserSearchById(){
+export function carParkUserSearchById(id){
+  return request({
+    url:`http://47.113.191.6:1102/carPark/user/getCarParkUser/${id}`,
+    method:'get',
+  })
 
 }

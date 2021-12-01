@@ -98,7 +98,15 @@
         </el-form-item>
 
         <el-form-item label="有效期" prop="validTime">
-          <el-input v-model="ruleForm.validTime"></el-input>
+            <div class="block">
+            <el-date-picker
+              v-model="validTimeAdd"
+              type="datetime"
+              placeholder="选择日期时间"
+              align="right"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+            </div>
         </el-form-item>
 
         <el-form-item label="车场ID" prop="carParkId">
@@ -142,7 +150,15 @@
         </el-form-item>
 
         <el-form-item label="有效期" prop="validTime">
-          <el-input v-model="editForm.validTime"></el-input>
+            <div class="block">
+            <el-date-picker
+              v-model="validTimeEdit"
+              type="datetime"
+              placeholder="选择日期时间"
+              align="right"
+              :picker-options="pickerOptions">
+            </el-date-picker>
+            </div>
         </el-form-item>
 
         <el-form-item label="车场ID" prop="carParkId">
@@ -153,7 +169,7 @@
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="resetRuleForm()">重 置</el-button>
-        <el-button type="primary" @click="submitAddUserForm()">确 定</el-button>
+        <el-button type="primary" @click="editDataById_2()">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -181,6 +197,8 @@ export default {
     return {
       list:[],
       carParkUserQuery:{},
+      validTimeEdit:'',
+      validTimeAdd:'',
       ruleForm: {
         name:'',
         carNum:'',
@@ -209,11 +227,9 @@ export default {
         ],
         carParkId: [
           { required: true, message: '请输入', trigger: 'blur' }
-        ],
-        validTime: [
-          { required: true, message: '请输入', trigger: 'blur' }
         ]
       },
+
 
       editForm:{},
       page: 1,
@@ -222,6 +238,31 @@ export default {
 
       dialogVisible_add: false ,
       dialogVisible_edit: false,
+
+      pickerOptions: {
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            picker.$emit('pick', new Date());
+          }
+        }, {
+          text: '昨天',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24);
+            picker.$emit('pick', date);
+          }
+        }, {
+          text: '一周前',
+          onClick(picker) {
+            const date = new Date();
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+            picker.$emit('pick', date);
+          }
+        }]
+      },
+
+
     }
   },
   created() {
@@ -260,7 +301,7 @@ export default {
               type: 'success',
               message: '删除成功!'
             });
-            this.getList()
+            this.getHandle()
           })
       })
     },
@@ -279,13 +320,14 @@ export default {
         })
       this.dialogVisible_add = false
       this.ruleForm = {}
-      this.getList()
+      this.getHandle()
     },
 
     searchUserByCondition(page = 1){
       this.page = page
       selectConditionCarParkUser(this.page,this.limit, this.carParkUserQuery).then(res=> {
         this.list = res.data.records
+        console.log(res)
       })
     },
 
@@ -293,7 +335,8 @@ export default {
       // this.editForm = vm.list[id]
       this.dialogVisible_edit = true
       carParkUserSearchById(id).then(res=>{
-        this.editForm = res.data.carPark
+        this.editForm = res.data.user
+        this.validTime = res.data.user.validTime
       })
     },
 
