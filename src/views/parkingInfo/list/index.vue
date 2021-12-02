@@ -107,7 +107,7 @@
         </el-form-item>
 
         <el-form-item label="车场图片" prop="image">
-          <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow=true">更换头像</el-button>
+          <el-button type="primary" icon="el-icon-upload" @click="imagecropperShowAdd=true">更换头像</el-button>
           <!--
           v-show：是否显示上传组件
           :key：类似于id，如果一个页面多个图片上传控件，可以做区分
@@ -117,14 +117,14 @@
           <input type="file" name="file"/>
           -->
           <image-cropper
-            v-show="imagecropperShow"
+            v-show="imagecropperShowAdd"
             :width="300"
             :height="300"
             :key="'addUploadImage'"
             :url="'http://47.113.191.6:1302/oss/fileoss'"
             field="file"
-            @close="close()"
-            @crop-upload-success="this.cropSuccess(url)"
+            @close="closeAdd"
+            @crop-upload-success="cropSuccessAdd"
           />
         </el-form-item>
 
@@ -171,8 +171,26 @@
           <el-input v-model="editForm.address"></el-input>
         </el-form-item>
 
-        <el-form-item label="车场图片" prop="image">
-          <el-input v-model="editForm.image"></el-input>
+        <el-form-item label="车场头像" prop="image">
+                    <el-button type="primary" icon="el-icon-upload" @click="imagecropperShowEdit=true">更换头像</el-button>
+          <!--
+          v-show：是否显示上传组件
+          :key：类似于id，如果一个页面多个图片上传控件，可以做区分
+          :url：后台上传的url地址
+          @close：关闭上传组件
+          @crop-upload-success：上传成功后的回调
+          <input type="file" name="file"/>
+          -->
+          <image-cropper
+            v-show="imagecropperShowEdit"
+            :width="300"
+            :height="300"
+            :key="'addUploadImage'"
+            :url="'http://47.113.191.6:1302/oss/fileoss'"
+            field="file"
+            @close="closeEdit"
+            @crop-upload-success="cropSuccessEdit"
+          />
         </el-form-item>
 
       </el-form>
@@ -270,7 +288,10 @@ export default {
       },
 
       editForm:{},
-      imagecropperShow :false,
+      imagecropperShowAdd :false,
+      imagecropperKeyAdd : 0,
+      imagecropperShowEdit :false,
+      imagecropperKeyEdit : 0
     }
   },
   methods: {
@@ -302,10 +323,10 @@ export default {
           type: 'success',
           message: '编辑成功!'
         });
+        this.getList()
       })
       this.dialogVisible_edit = false
       this.editForm = {}
-      this.getList()
     },
 
     removeDataById(id){
@@ -320,7 +341,7 @@ export default {
               type: 'success',
               message: '删除成功!'
             });
-            this.getHandle()
+            this.getList()
           })
       })
     },
@@ -331,11 +352,11 @@ export default {
           type: 'success',
           message: '添加成功!'
         });
+        this.getList()
       }
       )
       this.dialogVisible_add = false
       this.ruleForm = {}
-      this.getList()
     },
 
     resetForm() {
@@ -346,16 +367,43 @@ export default {
       window.location =
         'http://47.113.191.6:1102/carPark/list/download'
     },
+
+    cropSuccessAdd(data) {
+      this.imagecropperShowAdd = false
+      this.ruleForm.image = data.url
+      console.log(data.url)
+      console.log('===================')
+      console.log(this.ruleForm.image)
+      this.imagecropperKey = this.imagecropperKey + 1
+    },
+//关闭上传弹框
+    closeAdd() {
+      this.imagecropperShowAdd = false
+      //上传组件初始化
+      this.imagecropperKey = this.imagecropperKey + 1
+    },
+
+    cropSuccessEdit(data) {
+      this.imagecropperShowEdit = false
+      this.editForm.image = data.url
+      console.log(data.url)
+      console.log('===================')
+      console.log(this.editForm.image)
+      this.imagecropperKey = this.imagecropperKey + 1
+    },
+//关闭上传弹框
+    closeEdit() {
+      this.imagecropperShowEdit = false
+      //上传组件初始化
+      this.imagecropperKey = this.imagecropperKey + 1
+    }
+
+
+
   },//method
 
   created() {
     this.getList()
   },
-
-  cropSuccess(data) {
-    this.imagecropperShow = false
-    this.list.image = data.url
-    this.imagecropperKey = this.imagecropperKey + 1
-  }
 }
 </script>

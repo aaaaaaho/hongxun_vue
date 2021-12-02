@@ -168,7 +168,7 @@
       </el-form>
       </span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="resetRuleForm()">重 置</el-button>
+        <el-button @click="resetEditForm()">重 置</el-button>
         <el-button type="primary" @click="editDataById_2()">确 定</el-button>
       </span>
     </el-dialog>
@@ -253,10 +253,10 @@ export default {
             picker.$emit('pick', date);
           }
         }, {
-          text: '一周前',
+          text: '一个月后',
           onClick(picker) {
             const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+            date.setTime(date.getTime() + 3600 * 1000 * 24 * 31);
             picker.$emit('pick', date);
           }
         }]
@@ -268,7 +268,10 @@ export default {
   created() {
     this.getHandle()
   },
+
+
   methods: {
+
     getHandle() {
       carParkUserFindAll().then(res => {
         this.list = res.data.items
@@ -282,6 +285,9 @@ export default {
     },
     resetCarParkQuery(){
       this.carParkUserQuery = {}
+    },
+    resetEditForm(){
+      this.editForm = {}
     },
 
     output_excel(){
@@ -317,10 +323,11 @@ export default {
             type: 'success',
             message: '添加成功!'
           });
-        })
+          this.getHandle()
+        }
+        )
       this.dialogVisible_add = false
       this.ruleForm = {}
-      this.getHandle()
     },
 
     searchUserByCondition(page = 1){
@@ -346,10 +353,10 @@ export default {
           type: 'success',
           message: '编辑成功!'
         });
+        this.getHandle()
       })
       this.dialogVisible_edit = false
       this.editForm = {}
-      this.getHandle()
     },
 
 
