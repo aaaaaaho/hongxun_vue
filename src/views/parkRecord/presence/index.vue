@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
 
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
-      <el-form-item label="车主">
-        <el-input v-model="formInline.name" placeholder="姓名"></el-input>
-      </el-form-item>
+    <el-form :inline="true" :model="carRecordQuery" class="demo-form-inline">
+<!--      <el-form-item label="车主">-->
+<!--        <el-input v-model="carRecordQuery.name" placeholder="姓名"></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item label="车牌号">
-        <el-input v-model="formInline.plate" placeholder="车牌号"></el-input>
+        <el-input v-model="carRecordQuery.plateNum" placeholder="车牌号"></el-input>
       </el-form-item>
 
       <el-form-item label="入场时间">
         <div class="block">
           <span class="demonstration"></span>
           <el-date-picker
-            v-model="formInline.date_start"
+            v-model="carRecordQuery.updateTime"
             align="right"
             type="date"
             placeholder="选择日期"
@@ -21,20 +21,15 @@
           </el-date-picker>
         </div>
       </el-form-item>
-
-
       <el-form-item>
-        <el-button type="primary" @click="">查询</el-button>
+        <el-button type="primary" @click="getList()">查询</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="clearCarRecordQuery">清空</el-button>
       </el-form-item>
     </el-form>
 
     <el-table :data="list">
-      <!--      v-loading="listLoading"-->
-      <!--      :data="list"-->
-      <!--      element-loading-text="Loading"-->
-      <!--      border-->
-      <!--      fit-->
-      <!--      highlight-current-row-->
       <el-table-column align="center" label="id" width="95">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -42,17 +37,12 @@
       </el-table-column>
       <el-table-column label="车牌号"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.plate }}
-        </template>
-      </el-table-column>
-      <el-table-column label="授权分组" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.group }}
+          {{ scope.row.plateNum }}
         </template>
       </el-table-column>
       <el-table-column label="入场时间"  align="center">
         <template slot-scope="scope">
-          {{ scope.row.date }}
+          {{ scope.row.updateTime }}
         </template>
       </el-table-column>
       <el-table-column label="时长"  align="center">
@@ -60,14 +50,14 @@
           {{ scope.row.time }}
         </template>
       </el-table-column>
-      <el-table-column label="车主"  align="center">
-        <template slot-scope="scope">
-          {{ scope.row.name }}
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="车主"  align="center">-->
+<!--        <template slot-scope="scope">-->
+<!--          {{ scope.row.name }}-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column  label="图片" align="center">
         <template slot-scope="scope">
-          <el-image style="width: 30px; height: 30px" :src="scope.row.url" :preview-src-list="[scope.row.url]">
+          <el-image style="width: 30px; height: 30px" :src="scope.row.picture" :preview-src-list="[scope.row.picture]">
             <div slot="error" class="image-slot">
               <i class="el-icon-picture-outline"></i>
             </div>
@@ -75,11 +65,26 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <div class="block">
+      <span class="demonstration"></span>
+      <el-pagination
+        :current-page="page"
+        :page-size="limit"
+        :total="total"
+        style="padding: 30px 0; text-align: center;"
+        layout="total, prev, pager, next, jumper"
+        @current-change="getList"
+      />
+    </div>
+
+
   </div>
 </template>
 
 <script>
-import { parkingRecord_presence } from '@/api/parkRecord'
+import { parkingRecordCondition } from '@/api/parkRecord'
+
 export default {
   filters: {
     statusFilter(status) {
@@ -116,12 +121,7 @@ export default {
         }
       ],
 
-      formInline: {
-        name: '',
-        plate: '',
-        tel: '',
-        date_start:'',
-        date_fin:''
+      carRecordQuery: {
       },
 
       pickerOptions: {
@@ -149,26 +149,28 @@ export default {
           }
         }],
 
-        value:''
+        value:'',
+      },
 
-      }
+      page: 1,
+      limit:5,
+      total: 0,
     }
   },
   created() {
-    this.getHandle()
+    this.getList()
   },
   methods: {
-    getHandle() {
-      parkingRecord_presence().then(res => {
-        this.list = res.data.list
-        console.log(res.data.list)
+    getList(page = 1) {
+      this.page = page
+      parkingRecordCondition(this.page,this.limit, this.carRecordQuery).then(res=> {
+        this.list = res.data.records
+        this.total = res.data.total
       })
     },
-    getImgUrl(src){
-      return require("@/assets/carPic/" +src +'.jpg') //动态请求项目内固定路径图片
-    },
-
-
+    clearCarRecordQuery(){
+      this.carRecordQuery = {}
+    }
   }
 }
 </script>

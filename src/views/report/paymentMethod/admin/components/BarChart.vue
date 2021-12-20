@@ -16,7 +16,7 @@ export default {
     },
     width: {
       type: String,
-      default: '100%'
+      default: '40%'
     },
     height: {
       type: String,
@@ -69,13 +69,13 @@ export default {
     setOptions({testData,testData_2,testData_3,testData_4,testData_5}={}) {
       this.chart.setOption({
         title: {
-          text: '收入构成',
+          text: 'Power consumption of each state of the sensor',
           left: 'center',
           y: 'bottom',
           padding: 10
         },
         xAxis: {
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          data: ['Sensor', 'Processor', 'Sending', 'Receive', 'Idle', 'Sleep'],
           // boundaryGap: false,
           axisTick: {
             show: false
@@ -101,10 +101,10 @@ export default {
           }
         },
         legend: {
-          data: ['暂停缴费', '租赁费','管理费','储值卡','商户充值']
+          data: ['Power consumption/mW']
         },
         series: [{
-          name: '暂停缴费', itemStyle: {
+          name: 'Power consumption/mW', itemStyle: {
             normal: {
               color: '#40c9c6',
             }

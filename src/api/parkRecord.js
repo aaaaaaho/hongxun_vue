@@ -48,3 +48,22 @@ export function parkingRecord_carInOut(){
     method: 'get'
   })
 }
+
+/***
+ * 接下来的是实际用的接口
+ */
+
+export function parkingRecord_findAll(){
+  return request({
+    url:`http://47.113.191.6:1402/records/carrecords/findAll`,
+    method: 'get'
+  })
+}
+
+export function parkingRecordCondition(current,limit,carRecordQuery){
+  return request({
+    url:`http://47.113.191.6:1402/records/carrecords/selectConditionCarRecords/${current}/${limit}`,
+    method: 'post',
+    data : carRecordQuery
+  })
+}

@@ -14,25 +14,6 @@
         label="金额">
       </el-table-column>
     </el-table>
-<!--      <line-chart :chart-data="lineChartData_2" />-->
-<!--    </el-row>-->
-
-<!--    <el-row :gutter="32">-->
-<!--    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">-->
-<!--      <bar-chart :chart-data="barChartData" />-->
-<!--    </el-row>-->
-
-<!--    <el-row :gutter="32">-->
-<!--      <el-col>-->
-<!--        <div class="chart-wrapper">-->
-<!--          <bar-chart :chart-data="barChartData" />-->
-<!--        </div>-->
-<!--      </el-col>-->
-<!--      <el-col :xs="24" :sm="24" :lg="8">-->
-<!--        <div class="chart-wrapper">-->
-<!--          <raddar-chart />-->
-<!--        </div>-->
-<!--      </el-col>-->
       <br/>
       <br/>
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
@@ -42,22 +23,15 @@
         </div>
       </el-col>
     </el-row>
-<!--      <el-col style="width: 50%" >-->
-<!--        <div class="chart-wrapper">-->
-<!--          <pie-chart_2 :chart-data="pieChartData_2" />-->
-<!--        </div>-->
-<!--      </el-col>-->
-<!--    </el-row>-->
-<!--    <el-row :gutter="8">-->
-<!--      <el-col :xs="{span: 24}" :sm="{span: 24}" :md="{span: 24}" :lg="{span: 12}" :xl="{span: 12}" style="padding-right:8px;margin-bottom:30px;">-->
-<!--        <transaction-table />-->
-<!--      </el-col>-->
-<!--      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 6}" style="margin-bottom:30px;">-->
-<!--        <to_do-list ‘_’是我自己加的 />-->
-<!--      </el-col>-->
-<!--      <el-col :xs="{span: 24}" :sm="{span: 12}" :md="{span: 12}" :lg="{span: 6}" :xl="{span: 6}" style="margin-bottom:30px;">-->
-<!--        <box-card />-->
-<!--      </el-col>-->
+    <br/>
+    <br/>
+    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-col style="height: 350px">
+        <div class="chart-wrapper">
+          <bar-chart :chart-data="barChartData" align="bottom"/>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -80,11 +54,7 @@ const lineChartData = {
 
 const barChartData = {
   newVisitis: {
-      testData: [312,345,657,867,978,931,312],
-      testData_2: [123,345,200,200,123,235,123],
-      testData_3: [200,123,432,645,200,123,645],
-      testData_4: [453,200,534,200,765,423,745],
-      testData_5: [200,123,123,321,543,765,624],
+      testData: [1,2,14,11,11,0.5],
   }
 }
 
